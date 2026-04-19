@@ -589,8 +589,8 @@ const CompanyProjects = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-6 max-h-screen overflow-y-auto overflow-x-hidden">
+      <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-semibold">Projects</h1>
         <button
           onClick={handleOpenSubmissions}
@@ -600,8 +600,8 @@ const CompanyProjects = () => {
         </button>
       </div>
 
-      {/* Projects List */}
-      <div className="space-y-4 mb-6">
+      {/* Projects Container - Fixed Size with Vertical Scroll */}
+      <div className="h-[32rem] overflow-y-auto overflow-x-hidden space-y-4 mb-4 border rounded-lg p-4 bg-gray-50">
         {projects.map((project) => (
           <div
             key={project.id}
@@ -628,9 +628,15 @@ const CompanyProjects = () => {
             </div>
           </div>
         ))}
+        
+        {projects.length === 0 && (
+          <div className="text-center py-8 text-gray-500">
+            <p>No projects yet. Create your first project below.</p>
+          </div>
+        )}
       </div>
 
-      {/* Create Project Card */}
+      {/* Create Project Card - Below Container */}
       <div className="bg-white rounded-xl shadow p-4">
         <h2 className="text-lg font-medium">Create New Project</h2>
         <p className="text-gray-500 text-sm mt-1">
@@ -795,7 +801,7 @@ const CompanyProjects = () => {
               </button>
             </div>
 
-            <div className="space-y-6">
+            <div className="max-h-[70vh] overflow-y-auto overflow-x-hidden space-y-6">
               {groups.map((group, index) => {
                 const total = group.candidates.length;
                 const selected = group.candidates.filter(
