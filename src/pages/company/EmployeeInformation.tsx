@@ -245,7 +245,7 @@ export default function EmployeeInformation() {
   }
 
   return (
-    <div className="p-4 space-y-4 h-[calc(100vh-8rem)] overflow-hidden">
+    <div className="p-4 max-h-screen overflow-y-auto overflow-x-hidden">
       {/* Header */}
       <div className="pb-2">
         <h1 className="text-2xl font-bold text-zinc-900">Employee Information</h1>
@@ -255,10 +255,10 @@ export default function EmployeeInformation() {
       </div>
 
       {/* Main Content - Fixed Height Container */}
-      <div className="flex-1 overflow-hidden flex gap-6">
+      <div className="h-[calc(100vh-12rem)] overflow-hidden flex gap-6">
         {/* Projects List - Left Side */}
-        <div className="w-2/5 overflow-y-auto">
-          <h2 className="text-lg font-semibold text-zinc-900 mb-4">Projects</h2>
+        <div className="w-2/5 h-full overflow-y-auto overflow-x-hidden border rounded-lg p-4 bg-gray-50">
+          <h2 className="text-lg font-semibold text-zinc-900 mb-4 sticky top-0 bg-gray-50 pb-2">Projects</h2>
           
           {projects.length === 0 ? (
             <Card>
@@ -306,8 +306,8 @@ export default function EmployeeInformation() {
 
         {/* Employees List - Right Side */}
         {selectedProject && (
-          <div className="flex-1 overflow-y-auto bg-white rounded-lg border p-4">
-            <div className="flex items-center justify-between mb-4">
+          <div className="flex-1 h-full overflow-y-auto overflow-x-hidden bg-white rounded-lg border p-4">
+            <div className="flex items-center justify-between mb-4 sticky top-0 bg-white pb-2 z-10">
               <h2 className="text-lg font-semibold text-zinc-900">
                 Employees - {selectedProject.title}
               </h2>
