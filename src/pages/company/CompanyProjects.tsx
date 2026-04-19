@@ -123,7 +123,7 @@ const CompanyProjects = () => {
       const result = await response.json();
       console.log("Model response:", result);
 
-      // Step 3: Update database with model's selections and update local state
+      // Step 3: Update database with model's selections (real-time subscription will handle UI updates)
       if (result && result.shortlisted) {
         // Update database - set selected to true only for model-selected users
         const { error: modelUpdateError } = await supabase
@@ -136,22 +136,8 @@ const CompanyProjects = () => {
           throw modelUpdateError;
         }
 
-        // Update local state to reflect changes
-        setGroups(prevGroups => 
-          prevGroups.map(group => {
-            if (group.projectId === projectId) {
-              return {
-                ...group,
-                candidates: group.candidates.map(candidate => ({
-                  ...candidate,
-                  status: result.shortlisted.includes(candidate.submissionId) ? "Selected" : "Applied",
-                  selected: result.shortlisted.includes(candidate.submissionId)
-                }))
-              };
-            }
-            return group;
-          })
-        );
+        console.log("Database updated with model selections. Real-time subscription will update UI.");
+        // Note: Removed local state update - real-time subscription will handle UI updates
       }
 
       return result;
