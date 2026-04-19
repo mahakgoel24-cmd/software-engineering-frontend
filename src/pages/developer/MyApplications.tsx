@@ -70,6 +70,11 @@ export default function MyApplications() {
   const [editingSubmission, setEditingSubmission] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<"all" | "pending" | "active" | "completed">("all");
 
+  // Generate random fit score between 70-99
+  const generateRandomScore = () => {
+    return Math.floor(Math.random() * 30) + 70; // 70-99 range
+  };
+
   useEffect(() => {
     fetchApplications();
   }, []);
@@ -132,7 +137,7 @@ export default function MyApplications() {
           ? `Company #${sub.projects.company.id}`
           : "Unknown Company",
         status,
-        fitScore: 85,
+        fitScore: generateRandomScore(),
         appliedDate: sub.created_at
           ? new Date(sub.created_at).toLocaleDateString()
           : "—",
