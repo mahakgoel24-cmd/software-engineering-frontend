@@ -526,76 +526,79 @@ export function DeveloperDashboard() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {projects.map((project, index) => {
-              const daysRemaining = getDaysRemaining(project.submission_deadline);
-              const isUrgent = daysRemaining <= 3;
+          <div className="h-96 overflow-y-auto overflow-x-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {projects.slice(0, 6).map((project, index) => {
+                const daysRemaining = getDaysRemaining(project.submission_deadline);
+                const isUrgent = daysRemaining <= 3;
 
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() =>
-                    navigate(`/developer/active-work/${project.id}`)
-                  }
-                  className="cursor-pointer"
-                >
-                  <Card className={`hover:border-zinc-400 transition-all h-[800px] ${
-                    isUrgent ? 'border-l-4 border-l-orange-500' : ''
-                  }`}>
-                    <CardContent className="p-6 flex flex-col h-[800px]">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-3">
-                          <h4 className="font-semibold text-zinc-900 text-lg">
-                            {project.title}
-                          </h4>
-                          {isUrgent && (
-                            <Badge variant="warning" className="text-xs bg-orange-100 text-orange-700">
-                              Due Soon
+                return (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() =>
+                      navigate("/developer/my-applications")
+                    }
+                    className="cursor-pointer"
+                  >
+                    <Card className={`hover:border-zinc-400 transition-all h-48 ${
+                      isUrgent ? 'border-l-4 border-l-orange-500' : ''
+                    }`}>
+                      <CardContent className="p-3 flex flex-col h-full">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h4 className="font-semibold text-zinc-900 text-sm line-clamp-1">
+                              {project.title}
+                            </h4>
+                            {isUrgent && (
+                              <Badge variant="warning" className="text-xs bg-orange-100 text-orange-700 whitespace-nowrap">
+                                Due Soon
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-xs text-zinc-600 line-clamp-2 mb-2">
+                            {project.description}
+                          </p>
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="flex items-center gap-1 text-zinc-500">
+                              <Calendar className="w-3 h-3" />
+                              {daysRemaining}d left
+                            </span>
+                            <Badge variant="secondary" className="text-xs">
+                              {project.status}
                             </Badge>
-                          )}
-                        </div>
-                        <p className="text-sm text-zinc-600 line-clamp-3 mb-4">
-                          {project.description}
-                        </p>
-                      </div>
+                          </div>
 
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="flex items-center gap-1 text-zinc-500">
-                            <Calendar className="w-4 h-4" />
-                            {daysRemaining} days left
-                          </span>
-                          <Badge variant="secondary" className="text-xs">
-                            {project.status}
-                          </Badge>
-                        </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs text-zinc-600">Budget</span>
+                            <span className="font-bold text-zinc-900 text-sm">
+                              {formatINR(project.total_pay)}
+                            </span>
+                          </div>
 
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-zinc-600">Budget</span>
-                          <span className="font-bold text-zinc-900 text-lg">
-                            {formatINR(project.total_pay)}
-                          </span>
+                          <Button
+                            size="sm"
+                            className="w-full text-xs"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate("/developer/my-applications");
+                            }}
+                          >
+                            Continue Work
+                          </Button>
                         </div>
-
-                        <Button
-                          className="w-full mt-2"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/developer/active-work/${project.id}`);
-                          }}
-                        >
-                          Continue Work
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
