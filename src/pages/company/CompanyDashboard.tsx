@@ -199,40 +199,53 @@ export function CompanyDashboard() {
           Requires Attention
         </h2>
 
-        <div className="grid gap-4">
-          {projects.slice(0, 2).map((project) => (
-            <Card key={project.id}>
-              <CardContent className="p-6 flex gap-6">
-                <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center">
-                  <AlertCircle className="w-5 h-5 text-amber-600" />
-                </div>
-
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold">
-                      {project.title}
-                    </h3>
-                    <Badge variant="outline">
-                      {project.status}
-                    </Badge>
+        <div className="max-h-96 overflow-y-auto space-y-4">
+          {projects
+            .filter(project => project.status !== "Completed")
+            .map((project) => (
+              <Card key={project.id} className="w-full">
+                <CardContent className="p-6 flex gap-6 min-w-0">
+                  <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="w-5 h-5 text-amber-600" />
                   </div>
-                  <p className="text-sm text-zinc-500">
-                    Review submissions to proceed.
-                  </p>
-                </div>
 
-                <div className="flex items-center gap-4">
-                  <InsightBadge
-                    label="Priority"
-                    score={85}
-                  />
-                  <Button size="sm" variant="secondary">
-                    Review
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold truncate">
+                        {project.title}
+                      </h3>
+                      <Badge variant="outline" className="flex-shrink-0">
+                        {project.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-zinc-500">
+                      Review submissions to proceed.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 flex-shrink-0">
+                    <InsightBadge
+                      label="Priority"
+                      score={85}
+                    />
+                    <Button 
+                      size="sm" 
+                      variant="secondary"
+                      onClick={() => navigate(`/company/projects`)}
+                    >
+                      Review
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          
+          {projects.filter(project => project.status !== "Completed").length === 0 && (
+            <div className="text-center py-8 text-zinc-500">
+              <AlertCircle className="w-8 h-8 mx-auto mb-2 text-zinc-400" />
+              <p>No ongoing projects require attention</p>
+            </div>
+          )}
         </div>
       </section>
 
