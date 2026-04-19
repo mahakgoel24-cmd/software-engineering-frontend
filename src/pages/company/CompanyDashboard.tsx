@@ -45,6 +45,11 @@ export function CompanyDashboard() {
   });
   const [loading, setLoading] = useState(true);
 
+  // Generate random fit score between 70-99
+  const generateRandomScore = () => {
+    return Math.floor(Math.random() * 30) + 70; // 70-99 range
+  };
+
   /* ------------------ Fetch Dashboard ------------------ */
 
   useEffect(() => {
@@ -226,7 +231,7 @@ export function CompanyDashboard() {
                   <div className="flex items-center gap-4 flex-shrink-0">
                     <InsightBadge
                       label="Priority"
-                      score={85}
+                      score={generateRandomScore()}
                     />
                     <Button 
                       size="sm" 
