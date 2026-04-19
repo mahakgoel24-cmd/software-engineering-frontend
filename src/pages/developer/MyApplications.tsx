@@ -72,7 +72,9 @@ export default function MyApplications() {
 
   // Generate random fit score between 70-99
   const generateRandomScore = () => {
-    return Math.floor(Math.random() * 30) + 70; // 70-99 range
+    const score = Math.floor(Math.random() * 30) + 70; // 70-99 range
+    console.log('Generated random fit score:', score);
+    return score;
   };
 
   useEffect(() => {
@@ -130,6 +132,9 @@ export default function MyApplications() {
         ? "Shortlisted"
         : "Pending";
 
+      const randomScore = generateRandomScore();
+      console.log('Mapping submission', sub.id, 'with fitScore:', randomScore);
+
       return {
         id: sub.id,
         project: sub.projects?.title ?? "Untitled Project",
@@ -137,7 +142,7 @@ export default function MyApplications() {
           ? `Company #${sub.projects.company.id}`
           : "Unknown Company",
         status,
-        fitScore: generateRandomScore(),
+        fitScore: randomScore,
         appliedDate: sub.created_at
           ? new Date(sub.created_at).toLocaleDateString()
           : "—",
