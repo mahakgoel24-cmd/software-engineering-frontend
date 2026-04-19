@@ -199,12 +199,12 @@ export function CompanyDashboard() {
           Requires Attention
         </h2>
 
-        <div className="max-h-96 overflow-y-auto space-y-4">
+        <div className="max-h-96 overflow-y-auto overflow-x-hidden space-y-4">
           {projects
             .filter(project => project.status !== "Completed")
             .map((project) => (
               <Card key={project.id} className="w-full">
-                <CardContent className="p-6 flex gap-6 min-w-0">
+                <CardContent className="p-6 flex gap-6 min-w-0 overflow-x-hidden">
                   <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
                     <AlertCircle className="w-5 h-5 text-amber-600" />
                   </div>
